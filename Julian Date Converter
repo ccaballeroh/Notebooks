@@ -1,0 +1,159 @@
+{
+ "metadata": {
+  "name": ""
+ },
+ "nbformat": 3,
+ "nbformat_minor": 0,
+ "worksheets": [
+  {
+   "cells": [
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "*Adaptado de la p\u00e1gina de Celestrak del Dr. T.S. Kelso*"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "Using Meeus' approach, the Python code for calculating the Julian Date of January 0.0 of any year would be:"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "def Julian_Date_of_Year(year):\n",
+      "    A, B = 0, 0\n",
+      "    year -=1\n",
+      "    A = int(year/100.0)\n",
+      "    B = 2 - A + int(A/4.0)\n",
+      "    return int(365.25 * year) \\\n",
+      "            + int(30.6001 * 14) \\\n",
+      "            + 1720994.5 + B\n",
+      "        "
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [],
+     "prompt_number": 1
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "To calculate the Julian Date of any calendar date, we simply combine the Julian Date of that year with the day of the year, where the day of the year can be calculated as:"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "def DOY(yr, mo, dy):\n",
+      "    days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n",
+      "    day = 0\n",
+      "    for i in range(mo-1):\n",
+      "        day += days[i]\n",
+      "    day += dy\n",
+      "    if (yr % 4 == 0) and ( (yr % 100 != 0) or (yr % 400 == 0) ) and \\\n",
+      "    (mo > 2):\n",
+      "        day += 1\n",
+      "    return day"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [],
+     "prompt_number": 2
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "As an example, the Julian Date of $0^h$ UTC on 1995 October 01 would be written as:"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "JD = Julian_Date_of_Year(1995) + DOY(1995, 10, 8)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [],
+     "prompt_number": 3
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "with a result of:"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "Julian_Date_of_Year(1995)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "metadata": {},
+       "output_type": "pyout",
+       "prompt_number": 4,
+       "text": [
+        "2449717.5"
+       ]
+      }
+     ],
+     "prompt_number": 4
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "DOY(1995, 10, 1)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "metadata": {},
+       "output_type": "pyout",
+       "prompt_number": 5,
+       "text": [
+        "274"
+       ]
+      }
+     ],
+     "prompt_number": 5
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "JD"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "metadata": {},
+       "output_type": "pyout",
+       "prompt_number": 6,
+       "text": [
+        "2449998.5"
+       ]
+      }
+     ],
+     "prompt_number": 6
+    }
+   ],
+   "metadata": {}
+  }
+ ]
+}
